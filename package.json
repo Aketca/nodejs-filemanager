@@ -4,7 +4,8 @@
   "description": "second task RS school",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "default": "node src/index.js -- --username=User"
   },
   "repository": {
     "type": "git",
