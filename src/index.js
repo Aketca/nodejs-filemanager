@@ -17,44 +17,42 @@ const echoInput = async (chunk) => {
     if (chunkStringified.includes('.exit')) {
         process.exit(0);
     }
-    if (chunkStringified.includes('up')) {
+    if (chunkStringified.trim().slice(0,2) === 'up') {
         await up();
     }
-    if (chunkStringified.includes('cd ')) {
+    if (chunkStringified.trim().slice(0,3) === 'cd ') {
         await cd(chunk);
     }
-    if (chunkStringified.includes('ls')) {
+    if (chunkStringified.trim().slice(0,2) === 'ls') {
         await ls();
     }
-    if (chunkStringified.includes('cat ')) {
+    if (chunkStringified.trim().slice(0,4) === 'cat ') {
         await cat(chunk);
     }
-    if (chunkStringified.includes('add ')) {
+    if (chunkStringified.trim().slice(0,4) === 'add ') {
         await add(chunk);
     }
-    if (chunkStringified.includes('rn ')) {
+    if (chunkStringified.trim().slice(0,3) === 'rn ') {
         await rn(chunk);
     }
-    if (chunkStringified.includes('cp ')) {
+    if (chunkStringified.trim().slice(0,3) === 'cp ') {
         await cp(chunk);
     }
-    if (chunkStringified.includes('mv ')) {
+    if (chunkStringified.trim().slice(0,3) === 'mv ') {
         await cp(chunk, 'mv');
     }
-    if (chunkStringified.includes('rm ')) {
+    if (chunkStringified.trim().slice(0,3) === 'rm ') {
         await rm(chunk);
     }
-    if (chunkStringified.includes('os ')) {
+    if (chunkStringified.trim().slice(0,3) === 'os ') {
         await osFunc(chunk);
     }
-    if (chunkStringified.includes('hash ')) {
+    if (chunkStringified.trim().slice(0,5) === 'hash ') {
         await hashFunc(chunk);
     }
     if (chunkStringified.includes('compress ')) {
         await compress(chunk)
     }
-    // process.stdout.write(`Received from master process: ${chunkStringified}`)
-    // process.stdout.write(`You are currently in ${currDir}`);
 };
 const index = async (args) => {
     const userParam = args.find((item) => item.includes('--username='));
@@ -68,7 +66,7 @@ const index = async (args) => {
 
         process.stdin.on('data', echoInput);
 
-        process.on('SIGINT', process.exit );
+        process.on('SIGINT', () => process.exit(0) );
 
         process.on('exit', () => {
             console.log(`Thank you for using File Manager, ${userName}, goodbye!`);
